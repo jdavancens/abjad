@@ -267,10 +267,6 @@ class Markup(AbjadValueObject):
     ### PRIVATE PROPERTIES ###
 
     @property
-    def _format_pieces(self):
-        return self._get_format_pieces()
-
-    @property
     def _lilypond_format(self):
         return '\n'.join(self._get_format_pieces())
 
@@ -937,7 +933,6 @@ class Markup(AbjadValueObject):
             blot,
             )
         return Markup(command)
-
 
     def finger(self):
         r'''LilyPond ``\finger`` markup command.
