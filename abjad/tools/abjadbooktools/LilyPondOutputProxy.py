@@ -71,7 +71,6 @@ class LilyPondOutputProxy(ImageOutputProxy):
         image_render_specifier=None,
         ):
         from abjad.tools import abjadbooktools
-        from abjad.tools import lilypondfiletools
         from abjad.tools import markuptools
         ImageOutputProxy.__init__(
             self,
@@ -89,7 +88,12 @@ class LilyPondOutputProxy(ImageOutputProxy):
                 payload)
         lilypond_file = payload
         assert isinstance(lilypond_file, lilypondfiletools.LilyPondFile)
-        lilypond_file.header_block.tagline = markuptools.Markup('""')
+        if lilypond_file.header_block is not None:
+            lilypond_file.header_block.tagline = markuptools.Markup('""')
+        else:
+            header_block = lilypondfiletools.Block(name='header')
+            header_block.tagline = markuptools.Markup('""')
+            lilypond_file.items.insert(0, header_block)
         lilypond_file._date_time_token = None
         token = lilypondfiletools.LilyPondVersionToken(
             "2.19.0",
